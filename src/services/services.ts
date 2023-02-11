@@ -1,3 +1,3 @@
 import NodeCache from "node-cache";
-import { inMemoryCacheOptions } from "./config";
+import { inMemoryCacheOptions } from "../utils/config";
 export const inMemoryCache = new NodeCache(inMemoryCacheOptions);

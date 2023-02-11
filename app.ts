@@ -1,11 +1,6 @@
 import express from "express";
-import { ipBlocker } from "./index";
-const logFile = `${process.cwd()}/log.txt`;
+import { logger } from "./src/middlewares/logger";
+import { LOGGER_FILE } from "./src/utils/constants";
+import { expressIpBlocker } from ".";
 
-express()
-  .use(
-    ipBlocker({
-      loggerFile: logFile,
-    })
-  )
-  .listen(3003);
+express().use(expressIpBlocker).listen(3003);

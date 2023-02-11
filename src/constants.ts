@@ -1,2 +1,0 @@
-export const IN_MEMORY_VALIDITY = 100000;
-export const IN_MEMORY_MAX_KEYS = 10000;

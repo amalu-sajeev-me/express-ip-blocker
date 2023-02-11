@@ -1,23 +1,11 @@
 import { RequestHandler } from "express";
-import requestIp from "request-ip";
-import log from "loglevel";
-import { logger } from "./src/utils";
-import { ipTracker } from "./ipTracker";
-import "./src/config";
+import { logger } from "./src/middlewares/logger";
+import { LOGGER_FILE } from "./src/utils/constants";
+import { ipTracker } from "./src/middlewares/IpTracker";
 
-type IIpBlockerOptions = {
-  loggerFile?: string;
+export const expressIpBlocker: RequestHandler = (...handlerParams) => {
+  logger("combined", LOGGER_FILE)(...handlerParams);
+  ipTracker(...handlerParams);
+  const next = handlerParams[2];
+  next();
 };
-
-export const ipBlocker =
-  (options = {} as IIpBlockerOptions): RequestHandler =>
-  (...handlerParams) => {
-    const { loggerFile } = options;
-
-    const [request, , next] = handlerParams;
-    const ipAddress = requestIp.getClientIp(request) || "";
-    log.info(`${ipAddress} logged in`);
-    if (loggerFile) logger(loggerFile)(...handlerParams);
-    ipTracker(...handlerParams);
-    next();
-  };

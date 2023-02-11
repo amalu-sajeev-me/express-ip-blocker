@@ -7,3 +7,8 @@ export type ICronDelay =
   | "days"
   | "weeks"
   | "months";
+
+export type PromiseCallback<T = unknown> = (
+  resolve: (fullfilled: T) => void,
+  reject: (rejected: unknown | never) => void
+) => void;
